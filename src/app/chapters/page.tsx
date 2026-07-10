@@ -1,47 +1,5 @@
 import Link from "next/link";
-
-const chapters = [
-  {
-    title: "خطبة الكتاب",
-    slug: "khutbat-al-kitab",
-  },
-{
-    title: "باب الاستعاذة",
-    slug: "istiadha",
-  },
-  {
-    title: "باب البسملة",
-    slug: "basmala",
-  },
-{
-    title: "سورة أم القرآن (الفاتحة)",
-    slug: "al-fatiha",
-  },
-  {
-    title: "باب الإدغام الكبير",
-    slug: "idgham-kabir",
-  },
-{
-    title: "باب إدغام الحرفين المتقاربين في كلمة وفي كلمتين",
-    slug: "idgham-harfain",
-  },
-  {
-    title: "باب هاء الكناية",
-    slug: "haa-kinaya",
-  },
-  {
-    title: "باب المد و القصر",
-    slug: "mad-w-qasr",
-  },
-  {
-    title: "باب الهمزتين من كلمة",
-    slug: "hamzatain-kalima",
-  },
-  {
-    title: "باب الهمزتين من كلمتين",
-    slug: "hamzatain-kalimatain",
-  },      
-];
+import { chapters } from "@/data/shatibi";
 
 export default function ChaptersPage() {
   return (
