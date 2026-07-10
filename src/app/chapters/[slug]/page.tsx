@@ -7,8 +7,9 @@ import { chapters } from "@/data/shatibi";
 import { hideWords } from "@/lib/hideWords";
 
 export default function ChapterPage() {
+  
+  const [versesCount, setVersesCount] = useState(1);
   const [hideLevel, setHideLevel] = useState(0);
-
   const params = useParams();
 
   const slug = params.slug as string;
@@ -20,6 +21,8 @@ export default function ChapterPage() {
   if (!chapter) {
     return <h1>الباب غير موجود</h1>;
   }
+
+  const visibleVerses = chapter.verses.slice(0, versesCount);
 
   return (
     <main className="min-h-screen p-10 bg-green-50">
@@ -51,8 +54,34 @@ export default function ChapterPage() {
         </button>
       </div>
 
+      <div className="mb-8">
+        <label className="ml-2">
+          عدد الأبيات للحفظ:
+        </label>
+            
+        <select
+          value={versesCount}
+          onChange={(e) =>
+            setVersesCount(Number(e.target.value))
+          }
+          className="border rounded p-2"
+        >
+          {Array.from(
+            { length: chapter.verses.length },
+            (_, i) => i + 1
+          ).map((number) => (
+            <option
+              key={number}
+              value={number}
+            >
+              {number}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="max-w-3xl mx-auto space-y-4">
-        {chapter.verses.map((verse, index) => (
+        {visibleVerses.map((verse, index) => (
           <div
             key={index}
             className="bg-white p-6 rounded-lg shadow"
