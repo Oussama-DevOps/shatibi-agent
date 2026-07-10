@@ -1,11 +1,17 @@
-import { chapters } from "@/data/shatibi";
+"use client";
 
-export default async function ChapterPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+import { useState } from "react";
+import { useParams } from "next/navigation";
+
+import { chapters } from "@/data/shatibi";
+import { hideWords } from "@/lib/hideWords";
+
+export default function ChapterPage() {
+  const [hidden, setHidden] = useState(false);
+
+  const params = useParams();
+
+  const slug = params.slug as string;
 
   const chapter = chapters.find(
     (c) => c.slug === slug
@@ -21,6 +27,13 @@ export default async function ChapterPage({
         {chapter.title}
       </h1>
 
+      <button
+        onClick={() => setHidden(!hidden)}
+        className="bg-green-700 text-white px-4 py-2 rounded-lg mb-8"
+      >
+        {hidden ? "إظهار الكلمات" : "إخفاء الكلمات"}
+      </button>
+
       <div className="max-w-3xl mx-auto space-y-4">
         {chapter.verses.map((verse, index) => (
           <div
@@ -28,7 +41,7 @@ export default async function ChapterPage({
             className="bg-white p-6 rounded-lg shadow"
           >
             <p className="text-xl text-center leading-loose">
-              {verse}
+              {hidden ? hideWords(verse, 0.3) : verse}
             </p>
           </div>
         ))}
