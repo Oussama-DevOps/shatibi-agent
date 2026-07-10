@@ -7,7 +7,7 @@ import { chapters } from "@/data/shatibi";
 import { hideWords } from "@/lib/hideWords";
 
 export default function ChapterPage() {
-  const [hidden, setHidden] = useState(false);
+  const [hideLevel, setHideLevel] = useState(0);
 
   const params = useParams();
 
@@ -27,12 +27,29 @@ export default function ChapterPage() {
         {chapter.title}
       </h1>
 
-      <button
-        onClick={() => setHidden(!hidden)}
-        className="bg-green-700 text-white px-4 py-2 rounded-lg mb-8"
-      >
-        {hidden ? "إظهار الكلمات" : "إخفاء الكلمات"}
-      </button>
+      <div className="flex gap-2 mb-8">
+        <button
+          onClick={() =>
+            setHideLevel(Math.max(0, hideLevel - 1))
+          }
+          className="bg-gray-500 text-white px-4 py-2 rounded"
+        >
+          -
+        </button>
+      
+        <span className="px-4 py-2">
+          نسبة الإخفاء: {hideLevel * 20}%
+        </span>
+      
+        <button
+          onClick={() =>
+            setHideLevel(Math.min(5, hideLevel + 1))
+          }
+          className="bg-green-700 text-white px-4 py-2 rounded"
+        >
+          +
+        </button>
+      </div>
 
       <div className="max-w-3xl mx-auto space-y-4">
         {chapter.verses.map((verse, index) => (
@@ -41,7 +58,11 @@ export default function ChapterPage() {
             className="bg-white p-6 rounded-lg shadow"
           >
             <p className="text-xl text-center leading-loose">
-              {hidden ? hideWords(verse, 0.3) : verse}
+              {
+                hideLevel === 0
+                  ? verse
+                  : hideWords(verse, hideLevel * 0.2)
+              }
             </p>
           </div>
         ))}
