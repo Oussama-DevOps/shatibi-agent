@@ -11,6 +11,7 @@ export default function ChapterPage() {
   const [versesCount, setVersesCount] = useState(1);
   const [hideLevel, setHideLevel] = useState(0);
   const params = useParams();
+  const [sessionStarted, setSessionStarted] = useState(false);
 
   const slug = params.slug as string;
 
@@ -31,6 +32,15 @@ export default function ChapterPage() {
       </h1>
 
       <div className="flex gap-2 mb-8">
+        {!sessionStarted && (
+          <button
+            onClick={() => setSessionStarted(true)}
+            className="bg-blue-700 text-white px-6 py-3 rounded-lg"
+          >
+            ابدأ جلسة الحفظ
+          </button>
+        )}
+
         <button
           onClick={() =>
             setHideLevel(Math.max(0, hideLevel - 1))
@@ -80,6 +90,7 @@ export default function ChapterPage() {
         </select>
       </div>
 
+      {sessionStarted && (
       <div className="max-w-3xl mx-auto space-y-4">
         {visibleVerses.map((verse, index) => (
           <div
@@ -96,6 +107,7 @@ export default function ChapterPage() {
           </div>
         ))}
       </div>
+      )}
     </main>
   );
 }
